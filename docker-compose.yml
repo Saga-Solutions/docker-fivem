@@ -14,4 +14,4 @@ services:
       - "30120:30120/udp"
       - "40120:40120"
     environment:
-      LICENSE_KEY: "license-key-here"
+      LICENSE_KEY: "cfxk_KmINVZ9APPLEeonuKTDR_YmmUA"
