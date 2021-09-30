@@ -15,7 +15,7 @@ if ! find . -mindepth 1 | read -r; then
 fi
 
 if [ -z "$NO_ONESYNC" ]; then
-    ONESYNC_ARGS="+set onesync on +set onesync_population true"
+    ONESYNC_ARGS="+set sv_enforceGameBuild 2372 +setr txEnableMenuBeta true"
 fi
 
 CONFIG_ARGS=

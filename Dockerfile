@@ -1,8 +1,8 @@
-ARG FIVEM_NUM=4394
-ARG FIVEM_VER=4394-572b000db3f5a323039e0915dac64641d1db408e
+ARG FIVEM_NUM=4686
+ARG FIVEM_VER=4686-19ff3c66a6bf6ee59c2c009b7f729e43a4885b9b
 ARG DATA_VER=b907aa74e2826e363979332ac21b9ad98cd82aa1
 
-FROM spritsail/alpine:3.14 as builder
+FROM alpine as builder
 
 ARG FIVEM_VER
 ARG DATA_VER
@@ -10,14 +10,14 @@ ARG DATA_VER
 WORKDIR /output
 
 RUN wget -O- http://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${FIVEM_VER}/fx.tar.xz \
-        | tar xJ --strip-components=1 \
-            --exclude alpine/dev --exclude alpine/proc \
-            --exclude alpine/run --exclude alpine/sys \
- && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
- && wget -O- http://github.com/citizenfx/cfx-server-data/archive/${DATA_VER}.tar.gz \
-        | tar xz --strip-components=1 -C opt/cfx-server-data \
+    | tar xJ --strip-components=1 \
+    --exclude alpine/dev --exclude alpine/proc \
+    --exclude alpine/run --exclude alpine/sys \
+    && mkdir -p /output/opt/cfx-server-data /output/usr/local/share \
+    && wget -O- http://github.com/citizenfx/cfx-server-data/archive/${DATA_VER}.tar.gz \
+    | tar xz --strip-components=1 -C opt/cfx-server-data \
     \
- && apk -p $PWD add tini
+    && apk -p $PWD add tini
 
 ADD server.cfg opt/cfx-server-data
 ADD entrypoint usr/bin/entrypoint
@@ -32,14 +32,14 @@ ARG FIVEM_VER
 ARG FIVEM_NUM
 ARG DATA_VER
 
-LABEL maintainer="Spritsail <fivem@spritsail.io>" \
-      org.label-schema.vendor="Spritsail" \
-      org.label-schema.name="FiveM" \
-      org.label-schema.url="https://fivem.net" \
-      org.label-schema.description="FiveM is a modification for Grand Theft Auto V enabling you to play multiplayer on customized dedicated servers." \
-      org.label-schema.version=${FIVEM_NUM} \
-      io.spritsail.version.fivem=${FIVEM_VER} \
-      io.spritsail.version.fivem_data=${DATA_VER}
+LABEL maintainer="Dulkith <dulkith1234@gmail.com>" \
+    org.label-schema.vendor="Ceylon Fort Life" \
+    org.label-schema.name="FiveM" \
+    org.label-schema.url="http://www.ceylonfortlife.com" \
+    org.label-schema.description="FiveM is a modification for Grand Theft Auto V enabling you to play multiplayer on customized dedicated servers." \
+    org.label-schema.version=${FIVEM_NUM} \
+    io.spritsail.version.fivem=${FIVEM_VER} \
+    io.spritsail.version.fivem_data=${DATA_VER}
 
 COPY --from=builder /output/ /
 
